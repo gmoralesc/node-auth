@@ -1,13 +1,10 @@
 require('dotenv').config();
 
 const config = {
-  hostname: process.env.HOST,
-  port: process.env.PORT,
-  db: {
-    url: process.env.DBURL,
-  },
+  hostname: process.env.HOST || '127.0.0.1',
+  port: process.env.PORT || '3000',
   jwt: {
-    secret: process.env.JWT,
+    secret: process.env.JWTSECRET,
   },
 };
 
