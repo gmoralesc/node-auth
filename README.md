@@ -47,10 +47,10 @@ response:
   }
 }
 ```
-## Protected route sample
+## Profile protected route
 url:
 ```
-http://localhost:3000/api/users/protected
+http://localhost:3000/api/users/profile
 ```
 method:
 ```
@@ -79,7 +79,7 @@ response:
 ```
 {
   "success": true,
-  "data": response   
+  "data": response
 }
 ```
 > Replace `JWT-HERE` with the actual token generated in Signup route

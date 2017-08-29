@@ -37,9 +37,25 @@ exports.signup = (req, res, next) => {
     });
 };
 
-exports.protected = (req, res, next) => {
-  res.json({
-    "success": true,
-    "message": "You got access to a protected route"
-  });
+exports.get = (req, res, next) => {
+  const userId = req.decoded._id;
+  if (userId) {
+    User.findById(userId)
+      .select('-password')
+      .then((user) => {
+        if (user) {
+          res.json({
+            success: true,
+            data: user
+          });
+        } else {
+          next(new Error('User not found'));
+        }
+      })
+      .catch((error) => {
+        next(new Error(error));
+      });
+  } else {
+    next(new Error('Error in token'));
+  }
 };
