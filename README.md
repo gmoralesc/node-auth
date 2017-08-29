@@ -9,7 +9,10 @@ Example node authentication app with jwt
 ```
 HOST=127.0.0.1
 PORT=3000
+JWTSECRET=secret
 ```
+> Replace `secret` wth the actual secret key
+
 4. npm install
 5. npm start
 
@@ -32,3 +35,51 @@ body:
   "email": "gustavo.morales@gmail.com"
 }
 ```
+response: 
+```
+{
+  "success": true,
+  "data": {
+    "name": "Gustavo",
+    "lastname": "Morales",
+    "email": "gustavo.morales@gmail.com",
+    "token": "JWT-HERE"
+  }
+}
+```
+## Protected route sample
+url:
+```
+http://localhost:3000/api/users/protected
+```
+method:
+```
+GET
+```
+The JSON Web Token can be send as any of the following options:
+
+header:
+```
+Authorization: JWT-HERE
+```
+
+query param:
+```
+token=JWT-HERE
+```
+
+body:
+```
+{
+  "token": "JWT-HERE"
+}
+```
+
+response:
+```
+{
+  "success": true,
+  "data": response   
+}
+```
+> Replace `JWT-HERE` with the actual token generated in Signup route
