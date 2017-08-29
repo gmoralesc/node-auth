@@ -1,0 +1,13 @@
+{
+  "name": "node-auth",
+  "version": "1.0.0",
+  "description": "Example authentication app with jwt",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Gustavo Morales <gustavo.morales@gmail.com>",
+  "license": "ISC"
+}
