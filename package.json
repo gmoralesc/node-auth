@@ -4,6 +4,7 @@
   "description": "Example authentication app with jwt",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index",
     "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +19,8 @@
     "jsonwebtoken": "^7.4.3",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
