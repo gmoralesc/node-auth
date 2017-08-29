@@ -9,5 +9,10 @@
   },
   "keywords": [],
   "author": "Gustavo Morales <gustavo.morales@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4"
+  }
 }
