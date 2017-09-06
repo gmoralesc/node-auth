@@ -6,7 +6,7 @@ const controller = require('./../controllers/users');
 router.route('/signup')
   .post(controller.signup);
 
-router.route('/protected')
-  .get(auth, controller.protected);
+router.route('/profile')
+  .get(auth, controller.profile);
 
 module.exports = router;

@@ -50,7 +50,7 @@ response:
 ## Protected route sample
 url:
 ```
-http://localhost:3000/api/users/protected
+http://localhost:3000/api/users/profile
 ```
 method:
 ```

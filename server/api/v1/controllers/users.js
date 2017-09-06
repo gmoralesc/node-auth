@@ -19,7 +19,7 @@ exports.signup = (req, res, next) => {
   });
 };
 
-exports.protected = (req, res, next) => {
+exports.profile = (req, res, next) => {
   res.json({
     "success": true,
     "message": "You got access to a protected route"
