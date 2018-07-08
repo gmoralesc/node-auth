@@ -3,11 +3,7 @@ const morgan = require('morgan');
 const logger = require('winston');
 const bodyParser = require('body-parser');
 
-const database = require('./database');
 const api = require('./api/v1');
-
-// Connect to database
-database.connect();
 
 // Initialize Express app
 const app = express();

@@ -12,13 +12,11 @@
   "author": "Gustavo Morales <gustavo.morales@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "cross-env": "^5.2.0",
     "dotenv": "^4.0.0",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.2.1",
     "morgan": "^1.9.0",
     "winston": "^3.0.0"
   },
