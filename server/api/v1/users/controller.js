@@ -22,7 +22,7 @@ exports.signup = (req, res, next) => {
 
       res.json({
         success: true,
-        ite: created,
+        item: created,
         meta: {
           token,
         },

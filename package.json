@@ -8,7 +8,12 @@
     "start": "cross-env NODE_ENV=production node index",
     "test": "cross-env NODE_ENV=test echo \"Error: no test specified\"&& exit 1"
   },
-  "keywords": ["node", "express", "jwt", "mongodb"],
+  "keywords": [
+    "node",
+    "express",
+    "jwt",
+    "mongodb"
+  ],
   "author": "Gustavo Morales <gustavo.morales@gmail.com>",
   "license": "ISC",
   "dependencies": {
