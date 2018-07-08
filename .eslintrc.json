@@ -1,6 +1,9 @@
 {
-  "extends": "airbnb-base",
-  "plugins": [
-      "import"
-  ]
+    "extends": "airbnb-base",
+    "rules": {
+        "no-console": "off",
+        "no-unused-vars": ["error", {
+            "argsIgnorePattern": "next"
+        }]
+    }
 }

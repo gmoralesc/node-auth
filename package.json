@@ -4,23 +4,28 @@
   "description": "Example authentication app with jwt",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index",
-    "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development nodemon index",
+    "start": "cross-env NODE_ENV=production node index",
+    "test": "cross-env NODE_ENV=test echo \"Error: no test specified\"&& exit 1"
   },
-  "keywords": [],
+  "keywords": ["node", "express", "jwt", "mongodb"],
   "author": "Gustavo Morales <gustavo.morales@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.3",
+    "cross-env": "^5.2.0",
     "dotenv": "^4.0.0",
-    "express": "^4.15.4",
-    "jsonwebtoken": "^7.4.3",
-    "lodash": "^4.17.4",
-    "mongoose": "^4.11.9"
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.1",
+    "morgan": "^1.9.0",
+    "winston": "^3.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "nodemon": "^1.17.5"
   }
 }

@@ -1,37 +1,61 @@
 const express = require('express');
+const morgan = require('morgan');
+const logger = require('winston');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 
-const config = require('./config');
+const database = require('./database');
 const api = require('./api/v1');
 
+// Connect to database
+database.connect();
+
+// Initialize Express app
 const app = express();
 
-// Connect to database
-mongoose.Promise = global.Promise;
-mongoose.connect(config.db.url, {
-  useMongoClient: true
-});
-
 // Setup middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('common'));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+  extended: false,
+}));
+// parse application/json
 app.use(bodyParser.json());
 
 // Setup router and routes
 app.use('/api', api);
 app.use('/api/v1', api);
 
-app.use((req, res) => {
+// Handle middleware errors
+app.use((req, res, next) => {
+  const message = 'Resource not found';
+  logger.warn(message);
   res.status(404);
   res.json({
-    error: 'Error. Route not found',
+    error: true,
+    message,
   });
 });
 
-app.use((err, req, res) => {
-  res.status(500);
+app.use((err, req, res, next) => {
+  let {
+    statusCode = 500,
+  } = err;
+  const {
+    message,
+  } = err;
+
+  // Validation Errors
+  if (err.message.startsWith('ValidationError')) {
+    statusCode = 422;
+  }
+
+  logger.error(`Error: ${message}`);
+  res.status(statusCode);
   res.json({
-    error: `${err}`,
+    error: true,
+    statusCode,
+    message,
   });
 });
 

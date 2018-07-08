@@ -7,9 +7,10 @@ Example node authentication app with jwt
 2. cd node-auth
 3. Create a `.env` file in the root directory with this content
 ```
-HOST=127.0.0.1
-PORT=3000
-JWTSECRET=secret
+SERVER_HOSTNAME=127.0.0.1
+SERVER_PORT=3000
+DATABASE_URL=mongodb://127.0.0.1/nodeauth
+JWTSECRET=rickandmorty
 ```
 > Replace `secret` wth the actual secret key
 
@@ -30,20 +31,23 @@ POST
 body:
 ```
 {
-  "name": "Gustavo",
+  "firstname": "Gustavo",
   "lastname": "Morales",
-  "email": "gustavo.morales@gmail.com"
+  "email": "gustavo.morales@gmail.com",
+  "password": "PASSWORD"
 }
 ```
 response: 
 ```
 {
   "success": true,
-  "data": {
+  "item": {
     "name": "Gustavo",
     "lastname": "Morales",
     "email": "gustavo.morales@gmail.com",
-    "token": "JWT-HERE"
+  },
+  "meta": {
+    "token": "JWT-TOKEN"
   }
 }
 ```
@@ -60,18 +64,18 @@ The JSON Web Token can be send as any of the following options:
 
 header:
 ```
-Authorization: JWT-HERE
+Authorization: JWT-TOKEN
 ```
 
 query param:
 ```
-token=JWT-HERE
+token=JWT-TOKEN
 ```
 
 body:
 ```
 {
-  "token": "JWT-HERE"
+  "token": "JWT-TOKEN"
 }
 ```
 
@@ -79,7 +83,11 @@ response:
 ```
 {
   "success": true,
-  "data": response
+  "item": {
+    "firstname": "Gustavo",
+    "lastname": "Morales",
+    "email": "gustavo.morales@gmail.com",
+  }
 }
 ```
-> Replace `JWT-HERE` with the actual token generated in Signup route
+> Replace `JWT-TOKEN` with the actual token generated in Signup route

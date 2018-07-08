@@ -1,7 +1,15 @@
-const app = require('./server');
+const http = require('http');
 
+const app = require('./server');
 const config = require('./server/config');
 
-app.listen(config.port, config.hostname, () => {
-  console.log(`Server running at http://${config.hostname}:${config.port}/`);
+const {
+  hostname,
+  port,
+} = config.server;
+
+const server = http.createServer(app);
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });

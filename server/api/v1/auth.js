@@ -1,14 +1,19 @@
-const config = require('./../../config');
 const jwt = require('jsonwebtoken');
+const logger = require('winston');
+
+const config = require('./../../config');
 
 module.exports = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers.authorization;
   if (token) {
     jwt.verify(token, config.jwt.secret, (err, decoded) => {
       if (err) {
-        return res.status(401).json({
+        const message = 'Unauthorized';
+        logger.warn(message);
+        res.status(401);
+        res.json({
           success: false,
-          message: 'Unauthorized',
+          message,
         });
       } else {
         req.decoded = decoded;
@@ -16,9 +21,12 @@ module.exports = (req, res, next) => {
       }
     });
   } else {
-    return res.status(403).send({
+    const message = 'Forbidden';
+    logger.warn(message);
+    res.status(403);
+    res.json({
       success: false,
-      message: 'No token provided',
+      message,
     });
   }
 };

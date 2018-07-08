@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 
-const Schema = mongoose.Schema;
+const {
+  Schema,
+} = mongoose;
 
-const UserSchema = new Schema({
-  name: {
+const fields = {
+  firstname: {
     type: String,
     required: true,
   },
@@ -21,19 +23,39 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  }
-}, {
+  },
+};
+
+const user = new Schema(fields, {
   timestamps: true,
+  toJSON: {
+    virtuals: true,
+  },
+  toObject: {
+    virtuals: true,
+  },
 });
 
-UserSchema.pre('save', function (next) {
+const blacklistFields = ['password'];
+
+user.methods.toJSON = function toJSON() {
+  const doc = this.toObject();
+  blacklistFields.forEach((field) => {
+    if (Object.hasOwnProperty.call(doc, field)) {
+      delete doc[field];
+    }
+  });
+  return doc;
+};
+
+user.pre('save', function Save(next) {
   if (this.isModified('password') || this.isNew) {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10, null));
   }
   next();
 });
 
-UserSchema.methods.verifyPassword = function (password, callback) {
+user.methods.verifyPassword = function verifyPassword(password, callback) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) {
       callback(err);
@@ -43,4 +65,4 @@ UserSchema.methods.verifyPassword = function (password, callback) {
   });
 };
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model('user', user);
