@@ -3,7 +3,7 @@ const logger = require('winston');
 
 const config = require('./../../config');
 
-module.exports = (req, res, next) => {
+const auth = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers.authorization;
   if (token) {
     jwt.verify(token, config.jwt.secret, (err, decoded) => {
@@ -29,4 +29,22 @@ module.exports = (req, res, next) => {
       message,
     });
   }
+};
+
+const signToken = (payload, expiresIn = '1h') => jwt.sign(payload, config.jwt.secret, {
+  algorithm: 'HS256',
+  expiresIn,
+});
+
+const authFailed = (req, res, next) => {
+  res.json({
+    success: false,
+    message: 'Email or password does not match',
+  });
+};
+
+module.exports = {
+  auth,
+  authFailed,
+  signToken,
 };

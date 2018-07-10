@@ -49,20 +49,14 @@ user.methods.toJSON = function toJSON() {
 };
 
 user.pre('save', function Save(next) {
-  if (this.isModified('password') || this.isNew) {
-    this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10, null));
+  if (this.isNew || this.isModified('password')) {
+    this.password = bcrypt.hashSync(this.password);
   }
   next();
 });
 
-user.methods.verifyPassword = function verifyPassword(password, callback) {
-  bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, isMatch);
-    }
-  });
+user.methods.verifyPassword = function verifyPassword(password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
 module.exports = mongoose.model('user', user);

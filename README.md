@@ -51,6 +51,38 @@ response:
   }
 }
 ```
+
+## Signin
+url:
+```
+http://localhost:3000/api/users/signin
+```
+method:
+```
+POST
+```
+body:
+```
+{
+  "email": "gustavo.morales@gmail.com",
+  "password": "PASSWORD"
+}
+```
+response: 
+```
+{
+  "success": true,
+  "item": {
+    "name": "Gustavo",
+    "lastname": "Morales",
+    "email": "gustavo.morales@gmail.com",
+  },
+  "meta": {
+    "token": "JWT-TOKEN"
+  }
+}
+```
+
 ## Profile protected route
 url:
 ```

@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken');
-const logger = require('winston');
-
-const config = require('./../../../config');
+const {
+  signToken,
+} = require('./../auth');
 const User = require('./model');
 
 exports.signup = (req, res, next) => {
@@ -13,11 +12,8 @@ exports.signup = (req, res, next) => {
 
   user.save()
     .then((created) => {
-      const token = jwt.sign({
+      const token = signToken({
         id: created.id,
-      }, config.jwt.secret, {
-        algorithm: 'HS256',
-        expiresIn: '1h',
       });
 
       res.json({
@@ -40,27 +36,49 @@ exports.profile = (req, res, next) => {
   const {
     id,
   } = decoded;
-  if (id) {
-    User.findById(id)
-      .then((user) => {
-        if (user) {
-          res.json({
-            success: true,
-            item: user,
-          });
-        } else {
-          const message = 'User not found';
-          logger.info(message);
-          res.json({
-            success: false,
-            message,
-          });
-        }
-      })
-      .catch((error) => {
-        next(new Error(error));
+
+  User.findById(id)
+    .then((user) => {
+      res.json({
+        success: true,
+        item: user,
       });
-  } else {
-    next(new Error('Error in token'));
-  }
+    })
+    .catch((error) => {
+      next(new Error(error));
+    });
+};
+
+exports.signin = (req, res, next) => {
+  const {
+    body,
+  } = req;
+  const {
+    email,
+    password,
+  } = body;
+  User
+    .findOne({
+      email,
+    })
+    .exec()
+    .then((user) => {
+      if (user && user.verifyPassword(password)) {
+        const token = signToken({
+          id: user.id,
+        });
+        res.json({
+          success: true,
+          item: user,
+          meta: {
+            token,
+          },
+        });
+      } else {
+        next();
+      }
+    })
+    .catch((error) => {
+      next(new Error(error));
+    });
 };
