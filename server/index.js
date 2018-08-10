@@ -28,7 +28,7 @@ app.use('/api/v1', api);
 
 // Handle middleware errors
 app.use((req, res, next) => {
-  const message = 'API Resource not found';
+  const message = 'Resource not found';
   logger.warn(message);
   res.status(404);
   res.json({
